@@ -43,6 +43,7 @@ function makeHtmlBoard() {
     headCell.addEventListener("click", handleClick);
     top.append(headCell);
   }
+
   htmlBoard.append(top);
 
   // dynamically creates the main part of html board
@@ -56,6 +57,7 @@ function makeHtmlBoard() {
       cell.setAttribute("id", `c-${y}-${x}`);
       row.append(cell);
     }
+
     htmlBoard.append(row);
   }
 }
