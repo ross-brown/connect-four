@@ -18,15 +18,13 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   for (let y = 0; y < HEIGHT; y++) {
     const row = [];
     for (let x = 0; x < WIDTH; x++) {
       row.push(null);
     }
     board.push(row);
-  } 
-  console.log(board);
+  }
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -34,11 +32,11 @@ function makeBoard() {
 function makeHtmlBoard() {
   const htmlBoard = document.getElementById('board');
 
-  // TODO: add comment for this code
+  // Create container row for the top of the board where user will click
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
 
-  // TODO: add comment for this code
+  // Create each head cell that user clicks to pick where to drop piece
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", `top-${x}`);
@@ -51,19 +49,14 @@ function makeHtmlBoard() {
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
   for (let y = 0; y < HEIGHT; y++) {
-    // TODO: Create a table row element and assign to a "row" variable
+    const row = document.createElement("tr");
 
     for (let x = 0; x < WIDTH; x++) {
-      // TODO: Create a table cell element and assign to a "cell" variable
-
-      // TODO: add an id, c-y-x, to the above table cell element
-      // you'll use this later, so make sure you use c-y-x
-
-      // TODO: append the table cell to the table row
-
+      const cell = document.createElement("td");
+      cell.setAttribute("id", `c-${y}-${x}`);
+      row.append(cell);
     }
-    // TODO: append the row to the html board
-
+    htmlBoard.append(row);
   }
 }
 
