@@ -19,10 +19,7 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   for (let y = 0; y < HEIGHT; y++) {
-    const row = [];
-    for (let x = 0; x < WIDTH; x++) {
-      row.push(null);
-    }
+    const row = Array.from({ length: WIDTH }, () => null);
     board.push(row);
   }
 }
@@ -72,7 +69,13 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
+  const tableCell = document.querySelector(`#c-${y}-${x}`);
+
+  const pieceDiv = document.createElement("div");
+  pieceDiv.setAttribute("class", "piece");
+  pieceDiv.setAttribute("class", currPlayer.toString());
+
+  tableCell.append(pieceDiv);
 }
 
 /** endGame: announce game end */
@@ -85,8 +88,7 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  const x = +evt.target.id;
-
+  const x = +(evt.target.id.split('-')[1]);
   // get next spot in column (if none, ignore click)
   const y = findSpotForCol(x);
   if (y === null) {
