@@ -63,9 +63,7 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   for (let y = HEIGHT - 1; y >= 0; y--) {
-    if (board[y][x] === null) {
-      return y;
-    }
+    if (board[y][x] === null) return y;
   }
 
   return null;
@@ -95,9 +93,7 @@ function handleClick(evt) {
   const x = +(evt.target.id.split('-')[1]);
   // get next spot in column (if none, ignore click)
   const y = findSpotForCol(x);
-  if (y === null) {
-    return;
-  }
+  if (y === null) return;
 
   // place piece in board and add to HTML table
   board[y][x] = currPlayer;
@@ -129,10 +125,16 @@ function checkForWin() {
    * currPlayer
    */
   function _win(cells) {
+    // Validate if each cell is in bounds
+    for (const cell of cells) {
+      const y = cell[0];
+      const x = cell[1];
+      if ((y < 0 || y > 5) || (x < 0 || x > 6)) return false;
+    }
 
-    // TODO: Check four cells to see if they're all legal & all color of current
-    // player
-
+    // Check if every cell on the JS board is 1 OR 2
+    return cells.every(cell => board[cell[0]][cell[1]] === 1)
+      || cells.every(cell => board[cell[0]][cell[1]] === 2);
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -140,15 +142,11 @@ function checkForWin() {
   // ways to win: horizontal, vertical, diagonalDR, diagonalDL
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      // TODO: assign values to the below variables for each of the ways to win
-      // horizontal has been assigned for you
-      // each should be an array of 4 cell coordinates:
-      // [ [y, x], [y, x], [y, x], [y, x] ]
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert;
-      let diagDL;
-      let diagDR;
+      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      let diagDL = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      let diagDR = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
