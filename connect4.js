@@ -133,8 +133,10 @@ function checkForWin() {
     }
 
     // Check if every cell on the JS board is 1 OR 2
-    return cells.every(cell => board[cell[0]][cell[1]] === 1)
-      || cells.every(cell => board[cell[0]][cell[1]] === 2);
+    const allPlayerOne = cells.every(cell => board[cell[0]][cell[1]] === 1);
+    const allPlayerTwo = cells.every(cell => board[cell[0]][cell[1]] === 2);
+
+    return allPlayerOne || allPlayerTwo;
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
