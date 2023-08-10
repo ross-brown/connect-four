@@ -106,10 +106,9 @@ function handleClick(evt) {
   }
 
   // check for tie
-  if (board.every(row => !row.includes(null))) {
-    endGame("TIE GAME!!!");
+  if (!board[0].includes(null)) {
+    endGame("TIE GAME!!")
   }
-
 
   // switch players
   currPlayer = (currPlayer === 1 ? 2 : 1);
@@ -127,16 +126,12 @@ function checkForWin() {
   function _win(cells) {
     // Validate if each cell is in bounds
     for (const cell of cells) {
-      const y = cell[0];
-      const x = cell[1];
-      if ((y < 0 || y > 5) || (x < 0 || x > 6)) return false;
+      const [y, x] = cell;
+      if ((y < 0 || y > HEIGHT - 1) || (x < 0 || x > WIDTH - 1)) return false;
     }
 
-    // Check if every cell on the JS board is 1 OR 2
-    const allPlayerOne = cells.every(cell => board[cell[0]][cell[1]] === 1);
-    const allPlayerTwo = cells.every(cell => board[cell[0]][cell[1]] === 2);
-
-    return allPlayerOne || allPlayerTwo;
+    // Check if every cell on the JS board is all from the current player
+    return cells.every(cell => board[cell[0]][cell[1]] === currPlayer);
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
